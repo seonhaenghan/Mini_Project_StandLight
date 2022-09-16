@@ -19,6 +19,11 @@ add_executable(${PROJECT_NAME}
     ./src/app/Service/TempHumidService.cpp
     ./src/app/View/TempHumidView.cpp
     ./src/hw/UltraSonic/UltraSonic.cpp
+    ./src/hw/PWM/PWM.cpp
+    ./src/app/Service/PWMService.cpp
+    ./src/app/Service/TimerService.cpp
+    ./src/app/View/PWMView.cpp
+    ./src/app/View/TimerView.cpp
 )
 # header가 있는 위치를 넣어준다. 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -33,6 +38,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/hw/I2C
     ./src/hw/DHT11
     ./src/hw/UltraSonic
+    ./src/hw/PWM
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

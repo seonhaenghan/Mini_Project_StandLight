@@ -1,5 +1,6 @@
 #include <iostream>
 #include <wiringPi.h>
+#include <softPwm.h>
 #include "Button.h"
 #include "Led.h"
 #include "Listener.h"
@@ -17,13 +18,18 @@
 #include "TempHumidService.h"
 #include "TempHumidView.h"
 #include "UltraSonic.h"
-
+#include "PWM.h"
+#include "PWMService.h"
+#include "PWMView.h"
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
     Button modebutton(27);
     Button powerbutton(28);
+    Button windbutton(13);    // 해당 핀 num 
+    Button windpowerbutton(15);
+    Button timerbutton(29);
     ClockCheck clockCheck;
+    PWM pwm(26, 0, 100);
     Led led1(21);
     Led led2(22);
     Led led3(23);
@@ -33,13 +39,17 @@ int main()
     DHT11 dht11(7);
     LCD lcd(new I2C("/dev/i2c-1",0x27));
     View view(&led1, &led2, &led3, &led4, &led5, &lcd);
+    PWMView pwmView(&pwm);
+    TimerView timerView(&lcd);
     TempHumidView tempHumidView(&lcd);
     ClockView clockView(&lcd);
+    PWMService pwmService(&pwmView);
+    TimerService timerService(&timerView);
     Service service(&view);
     ClockService clockService(&clockView);
     TempHumidService temphumidService(&tempHumidView);
-    Controller control(&service, &clockService, &temphumidService);
-    Listener listener(&modebutton,&powerbutton, &control, &clockCheck, &dht11, &ultrasonic);
+    Controller control(&service, &clockService, &temphumidService, &pwmService, &timerService);
+    Listener listener(&modebutton,&powerbutton, &control,&windbutton ,&windpowerbutton,&timerbutton, &clockCheck, &dht11, &ultrasonic);
     DHT_Data dhtData;
 
     while (1)

@@ -1,9 +1,14 @@
 #include "Listener.h"
 #include <wiringPi.h>
-Listener::Listener(Button *modebutton, Button *powerbutton, Controller *control, ClockCheck *clock, DHT11 *dht11, UltraSonic *Ultrasonic)
+Listener::Listener(Button *modebutton,Button *powerbutton, Controller *control,
+    Button *windButton,Button *windpowerButton,  Button *timerButton,
+     ClockCheck *clock, DHT11 *dht11, UltraSonic *Ultrasonic)
 {
     this->modeButton = modebutton;
     this->powerButton = powerbutton;
+    this->windButton = windButton;
+    this->windpowerButton = windpowerButton;
+    this->timerButton = timerButton;
     this->controller = control;
     this->clockcheck = clock;
     this->dht11 = dht11;
@@ -32,6 +37,19 @@ void Listener::checkEvent()
         controller->updateEvent("powerButton");
     }
 
+    if (windButton -> getState() == RELEASE_ACTIVE)
+    {
+        controller->updateEvent("windButton");
+    }
+    if (windpowerButton -> getState() == RELEASE_ACTIVE)
+    {
+        controller->updateEvent("windpowerButton");
+    }
+    if (timerButton -> getState() == RELEASE_ACTIVE)
+    {
+        controller->updateEvent("timerButton");
+    }
+
     DHT_Data dhtData = dht11->readData();
     if(!dhtData.error)
     {
@@ -55,5 +73,12 @@ void Listener::checkEvent()
         prevUltraSonicTime = millis();
         int distance = Ultrasonic->readDistance();
         controller->updateDistance(distance);
+    }
+
+    static uint32_t time = 0;
+    if (millis() - time > 1000)
+    {
+        time = millis();
+        controller->updateTimer(time);
     }
 }
