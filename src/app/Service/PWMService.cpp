@@ -13,14 +13,14 @@ PWMService::~PWMService()
 void PWMService::updateEvent(std::string strState1)
 {
     static int motor_mode = 0;
-    // auto로 사용할지 manual로 사용할지 
+    //  
     if(strState1 == "windButton")
     {
         motor_mode++;
         motor_mode %=2;
-    
+        pwmView->modeState(motor_mode);
     }
-    pwmView->modeState(motor_mode);
+    
 }
 
 void PWMService::updateState(std::string strState2)
@@ -31,6 +31,7 @@ void PWMService::updateState(std::string strState2)
     {
         motor_power++;
         motor_power %= 4;
+        
     }
     pwmView->powerState(motor_power);
 }
@@ -40,10 +41,13 @@ void PWMService::upDatetemp(DHT_Data dhtData)
     float temp;
     static int tempOver = 0;
     temp = dhtData.Temp + (float)(dhtData.TempDec/10.0);
-    if(temp >= 26)
+    if(temp >= 23)
     {
-        tempOver++;
-         tempOver %= 2;
+        tempOver = 1;
+    }
+    else
+    {
+        tempOver = 0; 
     }
     pwmView->tempState(tempOver);
 }

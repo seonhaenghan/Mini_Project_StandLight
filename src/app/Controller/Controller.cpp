@@ -9,6 +9,7 @@ Controller::Controller(Service *serv, ClockService *clockServ,
     this->temphumidService = temphumidService; 
     this->pwmService = pwmService;
     this->timerService = timerService;
+    timercount = 0;
 }
 Controller::~Controller()
 {
@@ -25,13 +26,11 @@ void Controller::updateEvent(std::string strBtn)
     if (strBtn == "powerButton") 
     {
         service->updateState("powerButton");
-        timerService->timercounter(0);
     }  
 
     if (strBtn == "clockUpdate") 
     {
         clockService->updateEvent();
-        // Event만 발생 시켜준다. 
     }  
 
     if (strBtn == "windButton") 
@@ -43,19 +42,19 @@ void Controller::updateEvent(std::string strBtn)
     if (strBtn == "windpowerButton") 
     {
         pwmService->updateState("windpowerButton");
-        // state change 
+       
     } 
         // 타이머에 str 전송 
     if (strBtn == "timerButton") 
     {
         timerService->updateEvent("timerButton");
-       
+       clockService->updatestate("timerButton");
     }  
 }
 
 void Controller::updateTimer(int timer)
 {
-    int timercount = timer / 1000;
+    timercount = timer / 1000;
 
     timerService->timercounter(timercount);
 }

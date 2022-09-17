@@ -21,7 +21,7 @@ void Service::upDateEvent(DHT_Data dhtData)
 {
     float temp;
     temp = dhtData.Temp + (float)(dhtData.TempDec/10.0);
-    if(temp >= 26)
+    if(temp >= 28)
     {
         view->setState(LIGHT_OFF);
     }
@@ -142,7 +142,7 @@ void Service::updateState(std::string strState)
 void Service::updateDistance(int distance)
 {
     static int FalseCount = 0;
-    printf("distance : %d, %d\n", distance, FalseCount);
+    //printf("distance : %d, %d\n", distance, FalseCount);
     if(distance < 0)    // 범위 내에 물체가 없다면  Light off
     {
         bDistanceLight = false;

@@ -25,8 +25,8 @@ int main()
 {
     Button modebutton(27);
     Button powerbutton(28);
-    Button windbutton(13);    // 해당 핀 num 
-    Button windpowerbutton(15);
+    Button windbutton(2);    // 해당 핀 num 
+    Button windpowerbutton(3);
     Button timerbutton(29);
     ClockCheck clockCheck;
     PWM pwm(26, 0, 100);

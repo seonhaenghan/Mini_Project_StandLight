@@ -18,7 +18,7 @@ private:
     TempHumidService *temphumidService;
     PWMService *pwmService;
     TimerService *timerService;
-    
+    int timercount;
 public:
     Controller(Service *serv, ClockService *clockServ, 
     TempHumidService *temphumidService, PWMService *pwmService, TimerService *timerService);

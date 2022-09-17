@@ -12,7 +12,7 @@ private:
 public:
     ClockView(LCD *Lcd);
     virtual ~ClockView();
-    void updateTime(struct tm *timeData);
+    void updateTime(struct tm *timeData, int mode);
 };
 
 #endif

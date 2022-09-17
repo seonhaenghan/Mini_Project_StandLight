@@ -35,6 +35,7 @@ void Listener::checkEvent()
     if (powerButton->getState() == RELEASE_ACTIVE)
     {// Button2가 눌러졌을 때 modeButton이 Controller로 전송 됨
         controller->updateEvent("powerButton");
+       
     }
 
     if (windButton -> getState() == RELEASE_ACTIVE)
@@ -77,8 +78,10 @@ void Listener::checkEvent()
 
     static uint32_t time = 0;
     if (millis() - time > 1000)
-    {
+    {// 1초 마다 실행 
         time = millis();
+        // power 버튼이 눌렸을 때 initial 
+        
         controller->updateTimer(time);
     }
 }

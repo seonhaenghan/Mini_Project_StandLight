@@ -7,7 +7,8 @@ class PWMView
 {
 private:
     PWM *pwm;
-    int mode;
+    int onoffmode;
+    int powermode;
     int tempsign;
 public:
     PWMView(PWM *pwm);

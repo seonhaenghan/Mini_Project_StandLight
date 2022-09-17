@@ -13,13 +13,17 @@ ClockView::~ClockView()
 
 
 //ClockService에서 넘어온 값 
-void ClockView::updateTime(struct tm *timeData)
+void ClockView::updateTime(struct tm *timeData, int mode)
 {
-    char buff[30];
-    sprintf(buff, "%02d:%02d:%02d  ", 
-    timeData->tm_hour, timeData->tm_min, timeData->tm_sec);
+    if(mode == 0)
+    {
+        char buff[30];
+        sprintf(buff, "%02d:%02d:%02d  ", 
+        timeData->tm_hour, timeData->tm_min, timeData->tm_sec);
 
-    lcd->WriteStringXY(1, 0, buff);
+        lcd->WriteStringXY(1, 0, buff);
+    }
+    
 }
 
 // View에서 값을 넘겨 받음

@@ -15,7 +15,7 @@ PWM::~PWM()
 
 void PWM::Stopmotor()
 {
-   softPwmStop(pinNumber);
+   softPwmWrite(pinNumber, 0);
 }
 
 void PWM::startmotor(int speed)
