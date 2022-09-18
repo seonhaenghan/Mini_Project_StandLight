@@ -12,7 +12,7 @@
 class Controller
 {
 private:
-    int lightState;
+    int lightState; // test
     Service *service; // Service에 대한 정보를 생성자에 만들어줌 
     ClockService *clockService;
     TempHumidService *temphumidService;
