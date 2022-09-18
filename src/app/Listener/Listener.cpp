@@ -1,12 +1,11 @@
 #include "Listener.h"
 #include <wiringPi.h>
 Listener::Listener(Button *modebutton,Button *powerbutton, Controller *control,
-    Button *windButton,Button *windpowerButton,  Button *timerButton,
+    Button *windpowerButton,  Button *timerButton,
      ClockCheck *clock, DHT11 *dht11, UltraSonic *Ultrasonic)
 {
     this->modeButton = modebutton;
     this->powerButton = powerbutton;
-    this->windButton = windButton;
     this->windpowerButton = windpowerButton;
     this->timerButton = timerButton;
     this->controller = control;
@@ -36,11 +35,6 @@ void Listener::checkEvent()
     {// Button2가 눌러졌을 때 modeButton이 Controller로 전송 됨
         controller->updateEvent("powerButton");
        
-    }
-
-    if (windButton -> getState() == RELEASE_ACTIVE)
-    {
-        controller->updateEvent("windButton");
     }
     if (windpowerButton -> getState() == RELEASE_ACTIVE)
     {
@@ -77,11 +71,15 @@ void Listener::checkEvent()
     }
 
     static uint32_t time = 0;
+    static uint32_t timerCount = 0;
     if (millis() - time > 1000)
     {// 1초 마다 실행 
         time = millis();
-        // power 버튼이 눌렸을 때 initial 
-        
-        controller->updateTimer(time);
+        timerCount++;
+        if(powerButton->getState() == RELEASE_ACTIVE)
+        {// 전원을 껏을 때 0으로 초기화 
+            timerCount = 0;
+        }
+        controller->updateTimer(timerCount);
     }
 }

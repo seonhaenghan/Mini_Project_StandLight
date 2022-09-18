@@ -10,28 +10,14 @@ PWMService::~PWMService()
 
 }
 
-void PWMService::updateEvent(std::string strState1)
-{
-    static int motor_mode = 0;
-    //  
-    if(strState1 == "windButton")
-    {
-        motor_mode++;
-        motor_mode %=2;
-        pwmView->modeState(motor_mode);
-    }
-    
-}
-
 void PWMService::updateState(std::string strState2)
 {
-    static int motor_power = 0;
+    static int motor_power = POWER_LOW;
     // 바람의 세기
     if(strState2 == "windpowerButton")
     {
         motor_power++;
-        motor_power %= 4;
-        
+        motor_power %= 4;   
     }
     pwmView->powerState(motor_power);
 }

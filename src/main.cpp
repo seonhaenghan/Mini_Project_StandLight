@@ -25,7 +25,7 @@ int main()
 {
     Button modebutton(27);
     Button powerbutton(28);
-    Button windbutton(2);    // 해당 핀 num 
+    //Button windbutton(2); 사용 안함
     Button windpowerbutton(3);
     Button timerbutton(29);
     ClockCheck clockCheck;
@@ -49,7 +49,7 @@ int main()
     ClockService clockService(&clockView);
     TempHumidService temphumidService(&tempHumidView);
     Controller control(&service, &clockService, &temphumidService, &pwmService, &timerService);
-    Listener listener(&modebutton,&powerbutton, &control,&windbutton ,&windpowerbutton,&timerbutton, &clockCheck, &dht11, &ultrasonic);
+    Listener listener(&modebutton,&powerbutton, &control, &windpowerbutton, &timerbutton, &clockCheck, &dht11, &ultrasonic);
     DHT_Data dhtData;
 
     while (1)

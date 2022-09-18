@@ -3,7 +3,7 @@
 #include "PWMView.h"
 #include <string>
 #include "DHT_Data.h"
-#include "LightState.h"
+#include "MotorPowerState.h"
 // 문자열 사용 시 필요 
 
 class PWMService
@@ -14,7 +14,6 @@ private:
 public:
     PWMService(PWMView *pwmView);
     virtual ~PWMService();
-    void updateEvent(std::string strState1);
     void updateState(std::string strState2);
     void upDatetemp(DHT_Data dhtData);
 };

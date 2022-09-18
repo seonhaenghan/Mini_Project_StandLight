@@ -3,8 +3,7 @@
 PWMView::PWMView(PWM *pwm)
 {
     this->pwm = pwm;
-    onoffmode = 0;
-    powermode = 0;
+    powermode = POWER_OFF;
     tempsign = 0;
 }
 
@@ -13,25 +12,30 @@ PWMView::~PWMView()
 
 }
 
+void PWMView::powerState(int motor_power)
+{
+    powermode = motor_power;
+}
+
 void PWMView::tempState(int tempOver)
 {
     if(tempOver)
     {
          switch (powermode)
         {
-        case 0:
+        case POWER_LOW:
         pwm->startmotor(60);
             break;
 
-        case 1:
+        case POWER_MID:
         pwm->startmotor(70);
             break;
 
-        case 2:
+        case POWER_HIGH:
         pwm->startmotor(99);
             break;
 
-        case 3:
+        case POWER_OFF:
         pwm->Stopmotor();
             break;
         }
@@ -43,14 +47,5 @@ void PWMView::tempState(int tempOver)
    
 }
 
-void PWMView::modeState(int motor_mode)
-{
-    onoffmode = motor_mode;
-}
 
-void PWMView::powerState(int motor_power)
-{
-    powermode = motor_power;
-   
-}
 
